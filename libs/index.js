@@ -312,3 +312,39 @@ window.getAggressiveGasPrice = async function() {
     throw error; // Throw the error
   }
 };
+
+//--------------------------------------
+const fantomChain = {
+  chainId: "0x" + (64165).toString(16), // Convert decimal to hexadecimal
+  chainName: "Fantom Sonic Builders Testnet", // Network name
+  rpcUrls: ["https://rpc.sonic.fantom.network/"], // RPC URL
+  nativeCurrency: {
+    symbol: "FTM", // Native token symbol
+    decimals: 18, // Native token decimals
+  },
+  blockExplorerUrls: ["https://public-sonic.fantom.network"], // Block explorer URL
+};
+
+const addFantomChain = async () => {
+  if (window.ethereum && window.ethereum.isMetaMask) {
+    // Check for MetaMask injection and availability
+    try {
+      console.log(fantomChain);
+      await window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            ...fantomChain, // Include all chain details
+          },
+        ],
+      });
+      console.log("Fantom Sonic chain added successfully!");
+    } catch (error) {
+      console.error("Error adding Fantom Sonic chain:", error);
+    }
+  } else {
+    console.warn("MetaMask not detected or unavailable.");
+  }
+};
+
+addFantomChain();
