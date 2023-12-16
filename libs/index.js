@@ -83,6 +83,7 @@ async function GetWeb3(){
   const call_type = {
     CONNECT: 1,
     SEND_CONTRACT: 2,
+    FULL_SCREEN: 3,
   };
 
   const response_type = {
@@ -120,6 +121,17 @@ async function ConnectWallet(){
   response(response_type.ACCOUNT_NUMBER, userAccount)
 }
 
+var isfullscreen = false;
+function EnterFullScreen(){
+  if (isfullscreen){
+    window.unityInstance.SetFullscreen(0);
+    isfullscreen = false;
+  } 
+  else{
+    window.unityInstance.SetFullscreen(1);
+    isfullscreen = true;
+  }
+}
 
 // ConnectWallet();
 
@@ -131,6 +143,9 @@ function JsCallFunction(type, arg_string){
 
   if(type == call_type.CONNECT){    
     ConnectWallet()  
+  }
+  else if(type == call_type.FULL_SCREEN){    
+    EnterFullScreen()  
   }
   else if (type == call_type.SEND_CONTRACT){
     arg_string = arg_string.toString()
